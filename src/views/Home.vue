@@ -1,18 +1,31 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    Home
+    <p>My name is {{ name }} and my age is {{ age }}</p>
+    <button @click="handleClick">click me</button>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
+  // add composition api
+  setup() {
+    // will run before any other lifecycle method
+    let name = 'Daffy'
+    let age = 12
+
+    const handleClick = () => {
+
+    }
+
+    return {
+      // name: name,
+      name,
+      // age: age,
+      age,
+      handleClick
+    }
   }
 }
 </script>
