@@ -1,40 +1,42 @@
 <template>
   <div class="home">
     Home
-    <p>My name is {{ name }} and my age is {{ age }}</p>
-    <button @click="handleClick">click me</button>
-    <button @click="age++">add 1 to age</button>
-    <input type="text" v-model="name">
+    <!-- <div v-for="name in names" :key="name">{{ name }}</div> -->
+    <input type="text" v-model="search">
+    <p>search term - {{ search }}</p>
+    <div v-for="name in matchingNames" :key="name">{{ name }}</div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed, watch, watchEffect } from 'vue'
 
 export default {
   name: 'Home',
   // add composition api
   setup() {
     // will run before any other lifecycle method
+    
+    const search = ref('')
+    const names = ref(['mickey', 'donald', 'goofy', 'pluto', 'minnie'])
 
-    // template refs
-    // const p = ref(null)
+    // // watch to "watch for" change in the data
+    // watch(search, () => {
+    //   console.log('watch function run')
+    // })
 
-    // now reactive variables
-    const name = ref('Daffy')
-    const age = ref(12)
+    // watchEffect(() => {
+    //   console.log('watchEffect function run', search.value)
+    // })
 
-    const handleClick = () => {
-      name.value = 'Bugs'
-      age.value = 21
-    }
+    const matchingNames = computed(() => {
+      return names.value.filter(name => name.includes(search.value))
+    })
 
     return {
-      // name: name,
-      name,
-      // age: age,
-      age,
-      handleClick
+      names,
+      matchingNames,
+      search
     }
   }
 }
