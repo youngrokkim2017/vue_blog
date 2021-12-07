@@ -16,6 +16,7 @@
 <script>
 import { ref, computed } from 'vue'
 import PostList from '../components/PostList.vue' 
+import getPosts from '../composables/getPosts'
 
 export default {
   name: 'Home',
@@ -32,24 +33,10 @@ export default {
     //   return names.value.filter(name => name.includes(search.value))
     // })
 
-    const posts = ref([])
-    const error = ref(null)
+    // composables getPost
+    const { posts, error, load } = getPosts()
 
-    const load = async () => {
-      try {
-        let data = await fetch('https://localhost:3000/posts')
-        console.log(data)
-        if (!data.ok) {
-          throw Error('no data available')
-        }
-
-        // update posts
-        posts.value = await data.json()
-      } catch(err) {
-        error.value = err.message
-        console.log(err)
-      }
-    }
+    load()
 
     return {
       // names,
