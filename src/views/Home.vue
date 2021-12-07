@@ -1,42 +1,43 @@
 <template>
   <div class="home">
     Home
-    <!-- <div v-for="name in names" :key="name">{{ name }}</div> -->
-    <input type="text" v-model="search">
+    <!-- <input type="text" v-model="search">
     <p>search term - {{ search }}</p>
-    <div v-for="name in matchingNames" :key="name">{{ name }}</div>
+    <div v-for="name in matchingNames" :key="name">{{ name }}</div> -->
+
+    <PostList :posts="posts" />
   </div>
 </template>
 
 <script>
-import { ref, computed, watch, watchEffect } from 'vue'
+import { ref, computed } from 'vue'
+import PostList from '../components/PostList.vue' 
 
 export default {
   name: 'Home',
+  components: { PostList },
   // add composition api
   setup() {
     // will run before any other lifecycle method
     
-    const search = ref('')
-    const names = ref(['mickey', 'donald', 'goofy', 'pluto', 'minnie'])
+    // // search
+    // const search = ref('')
+    // const names = ref(['mickey', 'donald', 'goofy', 'pluto', 'minnie'])
 
-    // // watch to "watch for" change in the data
-    // watch(search, () => {
-    //   console.log('watch function run')
+    // const matchingNames = computed(() => {
+    //   return names.value.filter(name => name.includes(search.value))
     // })
 
-    // watchEffect(() => {
-    //   console.log('watchEffect function run', search.value)
-    // })
-
-    const matchingNames = computed(() => {
-      return names.value.filter(name => name.includes(search.value))
-    })
+    const posts = ref([
+      { title: 'welcome to the blog', body: 'lorem ipsum', id:1 },
+      { title: 'my first post', body: 'lorem ipsum', id:1 },
+    ])
 
     return {
-      names,
-      matchingNames,
-      search
+      // names,
+      // matchingNames,
+      // search,
+      posts
     }
   }
 }
