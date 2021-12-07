@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+// import { ref, computed } from 'vue'
 import PostList from '../components/PostList.vue' 
 import getPosts from '../composables/getPosts'
 

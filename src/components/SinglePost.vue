@@ -1,14 +1,21 @@
 <template>
-  <div class="post">
-        <h3>{{ post.title }}</h3>
+    <div class="post">
+        <router-link :to="{ name: 'Details', params: { id: post.id } }">
+            <h3>{{ post.title }}</h3>
+        </router-link>
         <p>{{ snippet }}</p>
-  </div>
+        <span v-for="tag in post.tags" :key="tag">
+            #{{ tag }}
+        </span>
+    </div>
 </template>
 
 <script>
+import { computed } from 'vue'
 import { onMounted, onUnmounted, onUpdated } from '@vue/runtime-core'
+
 export default {
-    props: [post],
+    props: ['post'],
     setup(props) {
         // snippet for body
         const snippet = computed(() => {
