@@ -5,7 +5,11 @@
     <p>search term - {{ search }}</p>
     <div v-for="name in matchingNames" :key="name">{{ name }}</div> -->
 
-    <PostList :posts="posts" />
+    <div v-if="error">{{ error }}</div>
+    <div v-if="posts.length">
+      <PostList :posts="posts" />
+    </div>
+    <div v-else>Loading...</div>
   </div>
 </template>
 
@@ -28,16 +32,31 @@ export default {
     //   return names.value.filter(name => name.includes(search.value))
     // })
 
-    const posts = ref([
-      { title: 'welcome to the blog', body: 'lorem ipsum', id:1 },
-      { title: 'my first post', body: 'lorem ipsum', id:1 },
-    ])
+    const posts = ref([])
+    const error = ref(null)
+
+    const load = async () => {
+      try {
+        let data = await fetch('https://localhost:3000/posts')
+        console.log(data)
+        if (!data.ok) {
+          throw Error('no data available')
+        }
+
+        // update posts
+        posts.value = await data.json()
+      } catch(err) {
+        error.value = err.message
+        console.log(err)
+      }
+    }
 
     return {
       // names,
       // matchingNames,
       // search,
-      posts
+      posts,
+      error
     }
   }
 }
